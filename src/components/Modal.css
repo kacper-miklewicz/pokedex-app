@@ -12,21 +12,48 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 800px;
-    height: 500px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 60px 100px;
+    padding: 40px 100px;
     border-radius: 10px;
     background-color: #fff;
 }
 
-.modal h2 {
-    align-self: flex-start;
+.modal-pokemon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-info {
+    padding-right: 150px;
+}
+
+.modal-pokemon img {
+    width: 200px;
+}
+
+.modal-type {
+    color: #777;
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+
+.modal-height {
+    margin-bottom: 15px;
+}
+
+.modal-stats {
+    list-style: none;
+    white-space: nowrap;
+}
+
+.modal-stats {
+    margin-bottom: 40px;
 }
 
 .modal button {
+    align-self: center;
     width: 200px;
     background-color: #fff;
     border: 1px solid black;
@@ -34,4 +61,10 @@
     line-height: 35px;
     border-radius: 10px;
     cursor: pointer;
+    transition: color .1s linear, background-color .1s linear;
+}
+
+.modal button:hover {
+    color: white;
+    background-color: #333;
 }
