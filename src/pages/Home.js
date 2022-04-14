@@ -14,9 +14,8 @@ export default function Home() {
   const [modalPokemon, setModalPokemon] = useState("");
 
   const handlePokemonClick = e => {
-    setModalPokemon(e.target.dataset.key);
+    setModalPokemon(pokemonsList[e.target.dataset.key]);
     setShowModal(true);
-    console.log(e.target.dataset.key);
   };
 
   useEffect(() => {
@@ -32,6 +31,9 @@ export default function Home() {
               name: pokemon.name,
               imgUrl: pokemon.sprites.front_default,
               type: pokemon.types[0].type.name,
+              stats: pokemon.stats,
+              weight: pokemon.weight,
+              height: pokemon.height,
             };
           })
         );
@@ -49,7 +51,11 @@ export default function Home() {
   return (
     <div>
       {showModal && (
-        <Modal modalPokemon={modalPokemon} setShowModal={setShowModal} />
+        <Modal
+          modalPokemon={modalPokemon}
+          setShowModal={setShowModal}
+          setModalPokemon={setModalPokemon}
+        />
       )}
       <h1 className="title">Pokedex App</h1>
       <button className="load-more" onClick={() => setLimit(limit + 10)}>
@@ -59,19 +65,19 @@ export default function Home() {
       {isPending && <div>Loading...</div>}
       {pokemonsList && (
         <ul className="pokemon-list">
-          {pokemonsList.map(pokemon => (
+          {pokemonsList.map((pokemon, index) => (
             <li
               className="pokemon"
               key={pokemon.name}
-              data-key={pokemon.name}
+              data-key={index}
               onClick={handlePokemonClick}
             >
-              <img src={pokemon.imgUrl} alt="pokemon" data-key={pokemon.name} />
-              <div className="pokemon-description" data-key={pokemon.name}>
-                <p data-key={pokemon.name} className="pokemon-name">
+              <img src={pokemon.imgUrl} alt="pokemon" data-key={index} />
+              <div className="pokemon-description" data-key={index}>
+                <p data-key={index} className="pokemon-name">
                   {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
                 </p>
-                <p data-key={pokemon.name}>Type: {pokemon.type}</p>
+                <p data-key={index}>Type: {pokemon.type}</p>
               </div>
             </li>
           ))}
