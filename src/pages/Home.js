@@ -1,10 +1,11 @@
 import "./Home.css";
 import Pokedex from "pokedex-promise-v2";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Modal from "../components/Modal";
+import Loading from "../components/Loading";
 
 export default function Home() {
-  const P = new Pokedex();
+  let P = useRef(new Pokedex()).current;
 
   const [limit, setLimit] = useState(20);
   const [pokemonsList, setPokemonsList] = useState(null);
@@ -13,16 +14,20 @@ export default function Home() {
   const [showModal, setShowModal] = useState(false);
   const [modalPokemon, setModalPokemon] = useState("");
 
-  const [inputValue, setInputValue] = useState("");
+  const [nameFilter, setNameFilter] = useState("");
+  const [typeFilter, setTypeFilter] = useState("");
 
   const handlePokemonClick = e => {
-    setModalPokemon(pokemonsList[e.target.dataset.key]);
+    setModalPokemon(
+      pokemonsList
+        .filter(
+          element => element.name.includes(nameFilter) || nameFilter === ""
+        )
+        .filter(
+          element => element.type.includes(typeFilter) || typeFilter === ""
+        )[e.target.dataset.key]
+    );
     setShowModal(true);
-  };
-
-  const handleInput = e => {
-    setInputValue(e.target.value);
-    console.log(e.target.value);
   };
 
   useEffect(() => {
@@ -53,7 +58,7 @@ export default function Home() {
     };
 
     getPokemons();
-  }, [limit]);
+  }, [limit, P]);
 
   return (
     <div>
@@ -65,37 +70,52 @@ export default function Home() {
         />
       )}
       <h1 className="title">Pokedex App</h1>
+      <input
+        className="search-name"
+        type="text"
+        placeholder="Filter pokemons by name..."
+        onInput={e => setNameFilter(e.target.value)}
+        value={nameFilter}
+      />
+      <input
+        className="search-type"
+        type="text"
+        placeholder="Filter pokemons by type..."
+        onInput={e => setTypeFilter(e.target.value)}
+        value={typeFilter}
+      />
+      {isPending && <Loading />}
+      {!isPending && pokemonsList && (
+        <ul className="pokemon-list">
+          {pokemonsList
+            .filter(
+              element => element.name.includes(nameFilter) || nameFilter === ""
+            )
+            .filter(
+              element => element.type.includes(typeFilter) || typeFilter === ""
+            )
+            .map((pokemon, index) => (
+              <li
+                className="pokemon"
+                key={pokemon.name}
+                data-key={index}
+                onClick={handlePokemonClick}
+              >
+                <img src={pokemon.imgUrl} alt="pokemon" data-key={index} />
+                <div className="pokemon-description" data-key={index}>
+                  <p data-key={index} className="pokemon-name">
+                    {pokemon.name.charAt(0).toUpperCase() +
+                      pokemon.name.slice(1)}
+                  </p>
+                  <p data-key={index}>Type: {pokemon.type}</p>
+                </div>
+              </li>
+            ))}
+        </ul>
+      )}
       <button className="load-more" onClick={() => setLimit(limit + 10)}>
         Load more pokemons
       </button>
-      <input
-        className="search"
-        type="text"
-        placeholder="Filter pokemons by name..."
-        onInput={handleInput}
-        value={inputValue}
-      />
-      {isPending && <div>Loading...</div>}
-      {pokemonsList && (
-        <ul className="pokemon-list">
-          {pokemonsList.map((pokemon, index) => (
-            <li
-              className="pokemon"
-              key={pokemon.name}
-              data-key={index}
-              onClick={handlePokemonClick}
-            >
-              <img src={pokemon.imgUrl} alt="pokemon" data-key={index} />
-              <div className="pokemon-description" data-key={index}>
-                <p data-key={index} className="pokemon-name">
-                  {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
-                </p>
-                <p data-key={index}>Type: {pokemon.type}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
     </div>
   );
 }

@@ -36,7 +36,7 @@ export default function Modal({ setShowModal, modalPokemon, setModalPokemon }) {
             setModalPokemon(null);
           }}
         >
-          Hide modal
+          Exit
         </button>
       </div>
     </div>
