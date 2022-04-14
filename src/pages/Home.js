@@ -21,13 +21,29 @@ export default function Home() {
 
   useEffect(() => {
     setIsPending(true);
-    P.getPokemonsList({ limit: limit, offset: 0 })
-      .then(res => {
-        console.log(res);
-        setPokemonsList(res.results);
+
+    const getPokemons = async () => {
+      try {
+        const res = await P.getPokemonsList({ limit: limit, offset: 0 });
+        const pokemons = await Promise.all(
+          res.results.map(async element => {
+            const pokemon = await P.getPokemonByName(element.name);
+            return {
+              name: pokemon.name,
+              imgUrl: pokemon.sprites.front_default,
+              type: pokemon.types[0].type.name,
+            };
+          })
+        );
+        setPokemonsList(pokemons);
         setIsPending(false);
-      })
-      .catch(err => console.log(err));
+      } catch (err) {
+        setIsPending(false);
+        console.log("error: " + err);
+      }
+    };
+
+    getPokemons();
   }, [limit]);
 
   return (
@@ -50,16 +66,12 @@ export default function Home() {
               data-key={pokemon.name}
               onClick={handlePokemonClick}
             >
-              <img
-                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/5.png"
-                alt="pokemon"
-                data-key={pokemon.name}
-              />
+              <img src={pokemon.imgUrl} alt="pokemon" data-key={pokemon.name} />
               <div className="pokemon-description" data-key={pokemon.name}>
                 <p data-key={pokemon.name} className="pokemon-name">
                   {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
                 </p>
-                <p data-key={pokemon.name}>Type: type</p>
+                <p data-key={pokemon.name}>Type: {pokemon.type}</p>
               </div>
             </li>
           ))}
