@@ -17,7 +17,7 @@ export default function Modal({ setShowModal, modalPokemon, setModalPokemon }) {
             </p>
             <p className="modal-weight">Weight: {modalPokemon.weight}</p>
             <p className="modal-height">Height: {modalPokemon.height}</p>
-            <h3>Statistics</h3>
+            <h4>Statistics</h4>
             <ul className="modal-stats">
               {modalPokemon.stats.map((element, index) => (
                 <li key={index}>

@@ -13,9 +13,16 @@ export default function Home() {
   const [showModal, setShowModal] = useState(false);
   const [modalPokemon, setModalPokemon] = useState("");
 
+  const [inputValue, setInputValue] = useState("");
+
   const handlePokemonClick = e => {
     setModalPokemon(pokemonsList[e.target.dataset.key]);
     setShowModal(true);
+  };
+
+  const handleInput = e => {
+    setInputValue(e.target.value);
+    console.log(e.target.value);
   };
 
   useEffect(() => {
@@ -61,7 +68,13 @@ export default function Home() {
       <button className="load-more" onClick={() => setLimit(limit + 10)}>
         Load more pokemons
       </button>
-      <input className="search" type="text" placeholder="Filter pokemons..." />
+      <input
+        className="search"
+        type="text"
+        placeholder="Filter pokemons by name..."
+        onInput={handleInput}
+        value={inputValue}
+      />
       {isPending && <div>Loading...</div>}
       {pokemonsList && (
         <ul className="pokemon-list">
