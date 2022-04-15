@@ -7,6 +7,10 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
+.modal-backdrop.backdrop-dark {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
 .modal {
     position: fixed;
     top: 50%;
@@ -19,6 +23,10 @@
     background-color: #fff;
 }
 
+.modal-dark {
+    background-color: #333;
+}
+
 .modal-pokemon {
     display: flex;
     align-items: center;
@@ -29,6 +37,10 @@
     padding-right: 150px;
 }
 
+.modal-info.info-dark {
+    color: #eee;
+}
+
 .modal-pokemon img {
     width: 200px;
 }
@@ -37,6 +49,10 @@
     color: #777;
     font-size: 14px;
     margin-bottom: 5px;
+}
+
+.modal-type.type-dark {
+    color: #aaa;
 }
 
 .modal-height {
@@ -64,7 +80,18 @@
     transition: color .1s linear, background-color .1s linear;
 }
 
+.modal button.button-dark {
+    color: #eee;
+    border-color: #eee;
+    background-color: #333;
+}
+
 .modal button:hover {
     color: white;
     background-color: #333;
+}
+
+.modal button.button-dark:hover {
+    color: #333;
+    background-color: #eee;
 }

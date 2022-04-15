@@ -1,8 +1,10 @@
 import "./Home.css";
 import Pokedex from "pokedex-promise-v2";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import Modal from "../components/Modal";
 import Loading from "../components/Loading";
+import { ThemeContext } from "../context/ThemeContext";
+import Navbar from "../components/Navbar";
 
 export default function Home() {
   let P = useRef(new Pokedex()).current;
@@ -16,6 +18,9 @@ export default function Home() {
 
   const [nameFilter, setNameFilter] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
+
+  const theme = useContext(ThemeContext);
+  const darkMode = theme.state.darkMode;
 
   const handlePokemonClick = e => {
     setModalPokemon(
@@ -69,16 +74,16 @@ export default function Home() {
           setModalPokemon={setModalPokemon}
         />
       )}
-      <h1 className="title">Pokedex App</h1>
+      <Navbar />
       <input
-        className="search-name"
+        className={`search-name ${darkMode ? "input-dark" : ""}`}
         type="text"
         placeholder="Filter pokemons by name..."
         onInput={e => setNameFilter(e.target.value)}
         value={nameFilter}
       />
       <input
-        className="search-type"
+        className={`search-type ${darkMode ? "input-dark" : ""}`}
         type="text"
         placeholder="Filter pokemons by type..."
         onInput={e => setTypeFilter(e.target.value)}
@@ -86,7 +91,7 @@ export default function Home() {
       />
       {isPending && <Loading />}
       {!isPending && pokemonsList && (
-        <ul className="pokemon-list">
+        <ul className={`pokemon-list ${darkMode ? "list-dark" : ""}`}>
           {pokemonsList
             .filter(
               element => element.name.includes(nameFilter) || nameFilter === ""
@@ -96,7 +101,7 @@ export default function Home() {
             )
             .map((pokemon, index) => (
               <li
-                className="pokemon"
+                className={`pokemon ${darkMode ? "pokemon-dark" : ""}`}
                 key={pokemon.name}
                 data-key={index}
                 onClick={handlePokemonClick}
@@ -113,7 +118,10 @@ export default function Home() {
             ))}
         </ul>
       )}
-      <button className="load-more" onClick={() => setLimit(limit + 10)}>
+      <button
+        className={`load-more ${darkMode ? "button-dark" : ""}`}
+        onClick={() => setLimit(limit + 10)}
+      >
         Load more pokemons
       </button>
     </div>

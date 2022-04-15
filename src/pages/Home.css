@@ -1,8 +1,3 @@
-h1.title {
-    text-align: center;
-    margin: 20px 0;
-}
-
 .search-name {
     width: 350px;
     line-height: 40px;
@@ -21,6 +16,16 @@ h1.title {
     font-size: 15px;
 }
 
+.input-dark {
+    background-color: #333;
+    color: #eee;
+    border-color: #eee;
+}
+
+.input-dark::placeholder {
+    color: #ddd;
+}
+
 .search-name:focus, .search-type:focus {
     outline: none;
 }
@@ -34,6 +39,11 @@ h1.title {
     border: 1px solid black;
     border-top: none;
     border-bottom: none;
+}
+
+.pokemon-list.list-dark {
+    border-color: #eee;
+    color: #eee;
 }
 
 li.pokemon {
@@ -62,6 +72,10 @@ li.pokemon:hover {
     background-color: rgb(249, 249, 249);
 }
 
+li.pokemon.pokemon-dark:hover {
+    background-color: #444;
+}
+
 li.pokemon:last-of-type {
     border-bottom: none;
 }
@@ -81,4 +95,14 @@ li.pokemon:last-of-type {
 .load-more:hover {
     color: white;
     background-color: #333;
+}
+
+.load-more.button-dark {
+    color: #eee;
+    border-color: #eee;
+}
+
+.load-more.button-dark:hover {
+    color: #333;
+    background-color: #eee;
 }
