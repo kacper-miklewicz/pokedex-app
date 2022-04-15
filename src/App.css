@@ -6,6 +6,7 @@
   box-sizing: border-box;
   font-family: sans-serif;
   font-family: 'Quicksand', sans-serif;
+  transition: color .05s linear, background-color .2s linear, border-color .05s linear;
 }
 
 body {
@@ -19,5 +20,3 @@ body {
 .body-dark {
   background-color: #333;
 }
-
-

@@ -17,6 +17,7 @@ nav button {
     border: none;
     background-color: transparent;
     cursor: pointer;
+    font-size: 23px;
 }
 
 nav .switch-dark {

@@ -1,6 +1,9 @@
 import "./Navbar.css";
 import { useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSun } from "@fortawesome/free-solid-svg-icons";
+import { faMoon } from "@fortawesome/free-solid-svg-icons";
 
 export default function Navbar() {
   const theme = useContext(ThemeContext);
@@ -23,7 +26,7 @@ export default function Navbar() {
         onClick={handleModeSwitch}
         className={darkMode ? "switch-dark" : ""}
       >
-        Switch mode
+        <FontAwesomeIcon icon={darkMode ? faSun : faMoon} />
       </button>
     </nav>
   );

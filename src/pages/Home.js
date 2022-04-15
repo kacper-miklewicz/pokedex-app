@@ -78,14 +78,14 @@ export default function Home() {
       <input
         className={`search-name ${darkMode ? "input-dark" : ""}`}
         type="text"
-        placeholder="Filter pokemons by name..."
+        placeholder="Filter by name..."
         onInput={e => setNameFilter(e.target.value)}
         value={nameFilter}
       />
       <input
         className={`search-type ${darkMode ? "input-dark" : ""}`}
         type="text"
-        placeholder="Filter pokemons by type..."
+        placeholder="Filter by type..."
         onInput={e => setTypeFilter(e.target.value)}
         value={typeFilter}
       />
