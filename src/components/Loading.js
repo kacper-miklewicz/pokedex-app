@@ -1,5 +1,7 @@
 import "./Loading.css";
+
 import ReactLoading from "react-loading";
+
 import { useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 

@@ -1,9 +1,12 @@
 import "./Home.css";
+
 import Pokedex from "pokedex-promise-v2";
+
 import { useEffect, useState, useRef, useContext } from "react";
+import { ThemeContext } from "../context/ThemeContext";
+
 import Modal from "../components/Modal";
 import Loading from "../components/Loading";
-import { ThemeContext } from "../context/ThemeContext";
 import Navbar from "../components/Navbar";
 
 export default function Home() {
@@ -92,6 +95,17 @@ export default function Home() {
       {isPending && <Loading />}
       {!isPending && pokemonsList && (
         <ul className={`pokemon-list ${darkMode ? "list-dark" : ""}`}>
+          {!pokemonsList
+            .filter(
+              element => element.name.includes(nameFilter) || nameFilter === ""
+            )
+            .filter(
+              element => element.type.includes(typeFilter) || typeFilter === ""
+            ).length && (
+            <li className={`no-pokemons ${darkMode ? "pokemon-dark" : ""}`}>
+              No pokemons matching query.
+            </li>
+          )}
           {pokemonsList
             .filter(
               element => element.name.includes(nameFilter) || nameFilter === ""
